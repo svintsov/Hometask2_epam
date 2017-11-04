@@ -6,10 +6,10 @@ public class Model {
   private int minLimit;
   private int maxLimit;
 
-  Model(int minLimit,int maxLimit){
-    secretValue=RandomGenerator.rand();
-    this.minLimit=minLimit;
-    this.maxLimit=maxLimit;
+  Model(int minLimit, int maxLimit) {
+    secretValue = RandomGenerator.rand();
+    this.minLimit = minLimit;
+    this.maxLimit = maxLimit;
   }
 
   public int getSecretValue() {
@@ -35,7 +35,6 @@ public class Model {
   public void setMaxLimit(int maxLimit) {
     this.maxLimit = maxLimit;
   }
-
 
 
   @Override

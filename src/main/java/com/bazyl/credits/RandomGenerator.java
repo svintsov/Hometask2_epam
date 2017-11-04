@@ -2,7 +2,7 @@ package com.bazyl.credits;
 
 public class RandomGenerator {
 
-  public  static int RAND_MIN = 0;
+  public static int RAND_MIN = 0;
   public static int RAND_MAX = 100;
 
   public static int rand(int min, int max) {
