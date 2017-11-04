@@ -13,14 +13,28 @@ class Controller {
   }
 
   void processUser() {
-    Scanner scanner = new Scanner(System.in);
     View.printMessage(String.valueOf(model.getSecretValue()));
-    while (!isCorrectValue(tryToFindCorrectValue(scanner))) {
-    }
-    View.printMessage("The game is over!");
+    guessSecretValue();
+    View.printMessage(View.GAME_OVER_MSG);
   }
 
-  private int tryToFindCorrectValue(Scanner scanner) {
+  private void guessSecretValue() {
+    Scanner scanner = new Scanner(System.in);
+    while (true) {
+      int enteredValue = getEnteredValue(scanner);
+      if (isCorrectRange(enteredValue)) {
+        if (isCorrectValue(enteredValue)) {
+          return;
+        } else {
+          setNewRangeBounds(enteredValue);
+        }
+      } else {
+        View.printMessage(View.ERROR_RANGE_MSG);
+      }
+    }
+  }
+
+  private int getEnteredValue(Scanner scanner) {
     View.printMessage(model.toString());
     View.printMessage(View.INPUT_VALUE_MSG);
     while (!scanner.hasNextInt()) {
@@ -33,23 +47,18 @@ class Controller {
   }
 
   private boolean isCorrectRange(int value) {
-    if (value < model.getMinLimit() || value > model.getMaxLimit()) {
-      View.printMessage(View.ERROR_RANGE_MSG);
-      return false;
-    }
-    return true;
+    return value >= model.getMinLimit() && value <= model.getMaxLimit();
   }
 
   private boolean isCorrectValue(int value) {
-    if (isCorrectRange(value)) {
-      if (value == model.getSecretValue()) {
-        return true;
-      } else if (value < model.getSecretValue()) {
-        model.setMinLimit(value);
-      } else {
-        model.setMaxLimit(value);
-      }
+    return isCorrectRange(value) && value == model.getSecretValue();
+  }
+
+  private void setNewRangeBounds(int value) {
+    if (value < model.getSecretValue()) {
+      model.setMinLimit(value);
+    } else {
+      model.setMaxLimit(value);
     }
-    return false;
   }
 }
